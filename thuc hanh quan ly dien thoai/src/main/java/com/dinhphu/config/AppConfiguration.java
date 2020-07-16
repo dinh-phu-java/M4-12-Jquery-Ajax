@@ -1,6 +1,8 @@
 package com.dinhphu.config;
 
 
+import com.dinhphu.services.ISmartPhoneServices;
+import com.dinhphu.services.SmartPhoneServices;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -154,6 +156,11 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
+    }
+
+    @Bean
+    public ISmartPhoneServices smartPhoneServices(){
+        return new SmartPhoneServices();
     }
 
 //    @Override
