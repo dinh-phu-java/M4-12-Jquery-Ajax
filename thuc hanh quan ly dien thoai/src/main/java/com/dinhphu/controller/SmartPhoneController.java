@@ -16,18 +16,31 @@ public class SmartPhoneController {
     @Autowired
     private ISmartPhoneServices smartPhoneServices;
 
-    @GetMapping("/create")
-    public ModelAndView createSmartPhone(){
-        ModelAndView modelAndView=new ModelAndView("phones/new-phone");
+    @GetMapping("/edit")
+    public ModelAndView showCreateForm(){
+        ModelAndView modelAndView =new ModelAndView("phones/edit-phone");
         modelAndView.addObject("smartPhone",new SmartPhone());
         return modelAndView;
     }
 
     @PostMapping("/createNewPhone")
     @ResponseBody
-    public SmartPhone createSmartPhone(@RequestBody SmartPhone smartPhone){
+    public SmartPhone createPhoneProcess(@RequestBody SmartPhone smartPhone){
         return smartPhoneServices.save(smartPhone);
     }
+
+//    @GetMapping("/create")
+//    public ModelAndView createSmartPhone(){
+//        ModelAndView modelAndView=new ModelAndView("phones/new-phone");
+//        modelAndView.addObject("smartPhone",new SmartPhone());
+//        return modelAndView;
+//    }
+//
+//    @PostMapping("/createNewPhone")
+//    @ResponseBody
+//    public SmartPhone createSmartPhone(@RequestBody SmartPhone smartPhone){
+//        return smartPhoneServices.save(smartPhone);
+//    }
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -42,5 +55,25 @@ public class SmartPhoneController {
         return modelAndView;
     }
 
+    @DeleteMapping(value="/delete/{id}")
+    @ResponseBody
+    public SmartPhone deleteSmartPhone(@PathVariable Integer id){
+        return smartPhoneServices.remove(id);
+    }
 
+    @GetMapping("/edit/{id}")
+    public ModelAndView editSmartPhonePage(@PathVariable Integer id){
+        ModelAndView modelAndView=new ModelAndView("phones/edit-phone");
+        SmartPhone smartphone=smartPhoneServices.findById(id);
+        modelAndView.addObject("smartPhone",smartphone);
+        return modelAndView;
+    }
+
+//    @PostMapping("/edit/{id}")
+    @PostMapping("/edit")
+    @ResponseBody
+    public SmartPhone editSmartphone(@RequestBody SmartPhone smartPhone){
+//        smartPhone.setId(id);
+        return smartPhoneServices.save(smartPhone);
+    }
 }

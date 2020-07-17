@@ -4,6 +4,59 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>List Smartphone</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        // $(document).ready(function () {
+        //     var deleteLink = $("a:contains('Delete')");
+        //     $(deleteLink).click(function (event) {
+        //         $.ajax({
+        //             url: $(event.target).attr("href"),
+        //             type: "DELETE",
+        //             beforeSend: function (xhr) {
+        //                 xhr.setRequestHeader("Accept", "application/json");
+        //                 xhr.setRequestHeader("Content-Type", "application/json");
+        //
+        //             },
+        //             success: function (smartphone) {
+        //                 var respContent = "";
+        //                 var rowToDelete = $(event.target).closest("tr");
+        //                 rowToDelete.remove();
+        //                 respContent += "<span class='success'>Smartphone was deleted: [";
+        //                 respContent += smartphone.producer + " : ";
+        //                 respContent += smartphone.model + " : ";
+        //                 respContent += smartphone.price + "]</span>";
+        //                 $("#sPhoneFromResponse").html(respContent);
+        //             }
+        //         });
+        //         event.preventDefault();
+        //     });
+        // });
+
+        $(document).ready(function(){
+           var delete_tags=$('a:contains("Delete")');
+           delete_tags.click(function(event){
+               var delete_target=$(event.target).attr("href");
+               $.ajax({
+                  headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                  },
+                   url:delete_target,
+                   type:"DELETE",
+                   success:function(smartphone){
+                      var resContent="<span class='success'> Delete Phone: [";
+                      resContent+=smartphone.producer + " : ";
+                      resContent+=smartphone.model + " : ";
+                      resContent+=smartphone.price + " : ";
+                      var deleteTr=$(event.target).closest("tr");
+                      deleteTr.remove();
+
+                      $('#sPhoneFromResponse').html(resContent);
+                   }
+               });
+               event.preventDefault();
+           });
+        });
+    </script>
 </head>
 <body>
 <div id="container">
